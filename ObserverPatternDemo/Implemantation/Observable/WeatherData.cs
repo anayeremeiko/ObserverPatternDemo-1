@@ -15,16 +15,31 @@ namespace ObserverPatternDemo.Implemantation.Observable
             observers = new List<IObserver<WeatherInfo>>();
         }
 
+        public void GenerateWeather()
+        {
+            var random = new Random();
+            var weatherInfo = new WeatherInfo
+            {
+                Humidity = random.Next(0, 100),
+                Pressure = random.Next(772, 780),
+                Temperature = random.Next(30)
+            };
+
+            Notify(weatherInfo);
+        }
+
         /// <summary>
         /// Notifies the observer that the provider has raised event.
         /// </summary>
         /// <param name="sender">The object that is to raised notifications.</param>
         /// <param name="info">The current notification information.</param>
-        public void Notify(IObservable<WeatherInfo> sender, WeatherInfo info)
+        void IObservable<WeatherInfo>.Notify(WeatherInfo info) => Notify(info);
+
+        protected virtual void Notify(WeatherInfo info)
         {
             foreach (var observer in observers)
             {
-                observer.Update(sender, info);
+                observer.Update(this, info);
             }
         }
 

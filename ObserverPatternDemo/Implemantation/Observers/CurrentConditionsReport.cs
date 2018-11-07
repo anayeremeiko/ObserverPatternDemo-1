@@ -19,6 +19,24 @@ namespace ObserverPatternDemo.Implemantation.Observers
         }
 
         /// <summary>
+        /// Subscribes to the specified weather station.
+        /// </summary>
+        /// <param name="weatherStation">The weather station.</param>
+        public void Subscribe(IObservable<WeatherInfo> weatherStation)
+        {
+            weatherStation.Register(this);
+        }
+
+        /// <summary>
+        /// Unsubscribes the specified weather station.
+        /// </summary>
+        /// <param name="weatherStation">The weather station.</param>
+        public void Unsubscribe(IObservable<WeatherInfo> weatherStation)
+        {
+            weatherStation.Unregister(this);
+        }
+
+        /// <summary>
         /// Converts to string.
         /// </summary>
         /// <returns>
